@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cutie Cat</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/cat.png">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init("iJYM0IlFeFdCgiEO1");
+    })();
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="cutie-cat-container" id="cutieContainer">
+      <div class="cutie-cat-img">
+        <img id="catImg" class="show" src="assets/img/1.gif" alt="">
+      </div>
+
+      <div class="cutie-cat-ind">
+        <p id="catInd" class="show">Halo Zia 😉</p>
+      </div>
+
+      <div class="cutie-cat-jpn">
+        <p id="catJpn" class="show">안녕하세요 지아</p>
+      </div>
+
+      <a href="#" class="Btn-Container" id="nextBtn">
+        <span class="text">Klik disini</span>
+        <span class="icon-Container"><svg width="12" height="15" viewBox="0 0 20 20" fill="none">
+            <circle cx="1.61321" cy="1.61321" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="1.61321" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="5.5566" r="1.5" fill="black"></circle>
+            <circle cx="9.85851" cy="5.5566" r="1.5" fill="black"></circle>
+            <circle cx="9.85851" cy="9.5" r="1.5" fill="black"></circle>
+            <circle cx="13.9811" cy="9.5" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="13.4434" r="1.5" fill="black"></circle>
+            <circle cx="9.85851" cy="13.4434" r="1.5" fill="black"></circle>
+            <circle cx="1.61321" cy="17.3868" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="17.3868" r="1.5" fill="black"></circle>
+          </svg> </span>
+      </a>
+    </div>
+
+    <div id="messageForm">
+      <div class="cutie-cat-img">
+        <img id="catImg" class="show" src="assets/img/23.gif" alt="">
+      </div>
+      <h2>Kirim Pesan untuk Azi <span>💌</span></h2>
+      <textarea id="userMessage" placeholder="Tulis pesanmu di sini..."></textarea><br>
+      <button type="button" id="sendBtn">
+        <span class="text">Kirim</span>
+        <span class="icon-Container"><svg width="12" height="15" viewBox="0 0 20 20" fill="none">
+            <circle cx="1.61321" cy="1.61321" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="1.61321" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="5.5566" r="1.5" fill="black"></circle>
+            <circle cx="9.85851" cy="5.5566" r="1.5" fill="black"></circle>
+            <circle cx="9.85851" cy="9.5" r="1.5" fill="black"></circle>
+            <circle cx="13.9811" cy="9.5" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="13.4434" r="1.5" fill="black"></circle>
+            <circle cx="9.85851" cy="13.4434" r="1.5" fill="black"></circle>
+            <circle cx="1.61321" cy="17.3868" r="1.5" fill="black"></circle>
+            <circle cx="5.73583" cy="17.3868" r="1.5" fill="black"></circle>
+          </svg> </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal" id="customModal">
+    <h3 id="modalMessage"></h3>
+    <button id="closeModal">OK</button>
+  </div>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="assets/music/lagu.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const cutieCats = [
+      { img: "assets/img/1.gif", ind: "Halo Zia", jpn: "안녕하세요 지아" },
+      { img: "assets/img/21.gif", ind: "Gimana kabarnya hari ini? 😃", jpn: "오늘 기분이 어떠세요?" },
+      { img: "assets/img/4.gif", ind: "Capek ya? Aku tau akhir akhir ini kamu banyak banget berjuang 😊", jpn: "피곤하시죠? 요즘 많이 힘드셨을 거 알아요..." },
+      { img: "assets/img/17.gif", ind: "Istirahat sebentar yuk? 🤗", jpn: "잠깐 휴식을 취하시죠?" },
+      { img: "assets/img/5.gif", ind: "Kamu hebat! Apa yang sudah kamu usahakan itu luar biasa. 😁👏", jpn: "정말 대단해요! 당신이 해낸 일이 정말 놀랍네요." },
+      { img: "assets/img/7.gif", ind: "Yap! Gadis kecil yang lucu ini dia hebat, dia juga kuat. 🤩", jpn: "네! 이 귀여운 소녀는 정말 멋지고, 힘도 세죠." },
+      { img: "assets/img/20.gif", ind: "Dan aku bangga padanya! 🥰", jpn: "그리고 나는 그를 자랑스럽게 생각해요!" },
+      { img: "assets/img/10.gif", ind: "Tetap semangat ya! Selama kamu selalu yakin, apapun yang sedang kamu hadapi, kamu pasti bisa lewati. 🤗", jpn: "힘내세요! 자신감만 있다면, 어떤 상황에 처하더라도 반드시 극복할 수 있어요." },
+      { img: "assets/img/29.gif", ind: "Jaga diri baik baik ya... sampai ketemu di lain waktu. See you. 👋😄", jpn: "몸조심하시고... 다음에 또 뵙겠습니다." },
+      { img: "assets/img/24.gif", ind: "Sukabumi - Semarang ✈️", jpn: "수카부미 - 세마랑" },
+      { img: "", ind: "", jpn: "" }
+    ];
+
+    let index = 0;
+    const catImg = document.getElementById("catImg");
+    const catInd = document.getElementById("catInd");
+    const catJpn = document.getElementById("catJpn");
+    const nextBtn = document.getElementById("nextBtn");
+    const cutieContainer = document.getElementById("cutieContainer");
+    const messageForm = document.getElementById("messageForm");
+
+    nextBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      if (index < cutieCats.length - 1) {
+        [catImg, catInd, catJpn].forEach(el => {
+          el.classList.remove("show");
+          el.classList.add("fade");
+        });
+
+        setTimeout(() => {
+          index++;
+          catImg.src = cutieCats[index].img;
+          catInd.textContent = cutieCats[index].ind;
+          catJpn.textContent = cutieCats[index].jpn;
+
+          [catImg, catInd, catJpn].forEach(el => {
+            el.classList.remove("fade");
+            el.classList.add("show");
+          });
+
+          if (index === cutieCats.length - 1) {
+            cutieContainer.style.display = "none";
+            messageForm.style.display = "block";
+          }
+        }, 700);
+      }
+    });
+
+    const bgMusic = document.getElementById("bgMusic");
+    document.body.addEventListener("click", () => {
+      if (bgMusic.paused) bgMusic.play();
+    }, { once: true });
+
+    const sendBtn = document.getElementById("sendBtn");
+    const userMessage = document.getElementById("userMessage");
+
+    const modal = document.getElementById("customModal");
+    const modalMessage = document.getElementById("modalMessage");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const closeModal = document.getElementById("closeModal");
+
+    function showModal(message) {
+      modalMessage.textContent = message;
+      modal.classList.add("show");
+      modalOverlay.classList.add("show");
+    }
+
+    function hideModal() {
+      modal.classList.remove("show");
+      modalOverlay.classList.remove("show");
+    }
+
+    closeModal.addEventListener("click", hideModal);
+    modalOverlay.addEventListener("click", hideModal);
+
+    sendBtn.addEventListener("click", () => {
+      const message = userMessage.value.trim();
+      if (message === "") {
+        showModal("Tulis pesannya dulu");
+        return;
+      }
+
+      const templateParams = {
+        name: "Zia Rea Desviani",
+        email: "zeanaareanaa@gmail.com",
+        subject: "Pesan dari Cutie Cat Web",
+        message: message
+      };
+
+      emailjs.send("service_ptaxmlp", "template_9jz7k9h", templateParams)
+        .then(function (response) {
+          showModal("Pesan berhasil dikirim!");
+          userMessage.value = "";
+        }, function (error) {
+          showModal("Gagal mengirim pesan");
+          console.log(error);
+        });
+    });
+  </script>
+</body>
+
+</html>
